@@ -244,16 +244,7 @@ GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMPage* linkedPage_)
 { }
 
 GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_)
-{ }
-
-GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMPage& linkedPage_)
-  : title(title_)
-  , linkedVariable(&linkedVariable_)
-  , linkedPage(&linkedPage_)
-  , linkedType(GEM_VAL_INTEGER)
-  , readonly(true)
-  , type(GEM_ITEM_LINKED_VAL)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
 { }
 
 GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMPage* linkedPage_)
@@ -265,13 +256,8 @@ GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMPage* linkedPage_)
   , type(GEM_ITEM_LINKED_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMPage& linkedPage_)
-  : title(title_)
-  , linkedVariable(linkedVariable_)
-  , linkedPage(&linkedPage_)
-  , linkedType(GEM_VAL_CHAR)
-  , readonly(true)
-  , type(GEM_ITEM_LINKED_VAL)
+GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
 { }
 
 GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMPage* linkedPage_)
@@ -283,13 +269,8 @@ GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMPage* linkedPage_)
   , type(GEM_ITEM_LINKED_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, boolean& linkedVariable_, GEMPage& linkedPage_)
-  : title(title_)
-  , linkedVariable(&linkedVariable_)
-  , linkedPage(&linkedPage_)
-  , linkedType(GEM_VAL_BOOLEAN)
-  , readonly(true)
-  , type(GEM_ITEM_LINKED_VAL)
+GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
 { }
 
 GEMItem::GEMItem(char* title_, boolean& linkedVariable_, GEMPage* linkedPage_)
@@ -301,14 +282,8 @@ GEMItem::GEMItem(char* title_, boolean& linkedVariable_, GEMPage* linkedPage_)
   , type(GEM_ITEM_LINKED_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMPage& linkedPage_)
-  : title(title_)
-  , linkedVariable(&linkedVariable_)
-  , linkedPage(&linkedPage_)
-  , linkedType(GEM_VAL_FLOAT)
-  , precision(GEM_FLOAT_PREC)
-  , readonly(true)
-  , type(GEM_ITEM_LINKED_VAL)
+GEMItem::GEMItem(char* title_, boolean& linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
 { }
 
 GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMPage* linkedPage_)
@@ -322,14 +297,8 @@ GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMPage* linkedPage_)
 { }
 
 
-GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMPage& linkedPage_)
-  : title(title_)
-  , linkedVariable(&linkedVariable_)
-  , linkedPage(&linkedPage_)
-  , linkedType(GEM_VAL_DOUBLE)
-  , precision(GEM_DOUBLE_PREC)
-  , readonly(true)
-  , type(GEM_ITEM_LINKED_VAL)
+GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
 { }
 
 GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMPage* linkedPage_)
@@ -340,6 +309,10 @@ GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMPage* linkedPage_)
   , precision(GEM_DOUBLE_PREC)
   , readonly(true)
   , type(GEM_ITEM_LINKED_VAL)
+{ }
+
+GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
 { }
 
 //---
