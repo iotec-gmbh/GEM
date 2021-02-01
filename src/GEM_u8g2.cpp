@@ -282,19 +282,6 @@ void GEM_u8g2::printMenuItemValue(char* str, int offset, byte startPos) {
   printMenuItemString(str, _menuItemValueLength + offset, startPos);
 }
 
-void GEM_u8g2::printMenuItemFull(char* str, int offset) {
-  printMenuItemString(str, _menuItemTitleLength + _menuItemValueLength + offset);
-}
-
-byte GEM_u8g2::getMenuItemInsetOffset(boolean forSprite) {
-  return _menuItemInsetOffset + (forSprite ? (_menuItemFontSize ? -1 : 0) : -1 ); // With additional offset for 6x8 sprites to compensate for smaller font size
-}
-
-byte GEM_u8g2::getCurrentItemTopOffset(boolean withInsetOffset, boolean forSprite) {
-  return (_menuPageCurrent->currentItemNum % _menuItemsPerScreen) * _menuItemHeight + _menuPageScreenTopOffset + (withInsetOffset ? getMenuItemInsetOffset(forSprite) : 0);
-}
-
-// TODO: Adopt in GME.h
 void GEM_u8g2::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw)
 {
   // check pointer
@@ -344,6 +331,20 @@ void GEM_u8g2::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw)
       break;
     #endif
   }
+  // ensure srting termination
+  memset(valueStringTmp, '\0', GEM_STR_LEN - 1);
+}
+
+void GEM_u8g2::printMenuItemFull(char* str, int offset) {
+  printMenuItemString(str, _menuItemTitleLength + _menuItemValueLength + offset);
+}
+
+byte GEM_u8g2::getMenuItemInsetOffset(boolean forSprite) {
+  return _menuItemInsetOffset + (forSprite ? (_menuItemFontSize ? -1 : 0) : -1 ); // With additional offset for 6x8 sprites to compensate for smaller font size
+}
+
+byte GEM_u8g2::getCurrentItemTopOffset(boolean withInsetOffset, boolean forSprite) {
+  return (_menuPageCurrent->currentItemNum % _menuItemsPerScreen) * _menuItemHeight + _menuPageScreenTopOffset + (withInsetOffset ? getMenuItemInsetOffset(forSprite) : 0);
 }
 
 void GEM_u8g2::printMenuItems() {
@@ -356,7 +357,7 @@ void GEM_u8g2::printMenuItems() {
     byte yDraw = y + getMenuItemInsetOffset(true);
     switch (menuItemTmp->type) {
       case GEM_ITEM_VAL:
-        // print item title
+        // print item title with edit symbol, if edit is enabled
         _u8g2.setCursor(5, yText);
         if (menuItemTmp->readonly) {
           printMenuItemTitle(menuItemTmp->title, -1);
@@ -364,10 +365,10 @@ void GEM_u8g2::printMenuItems() {
         } else {
           printMenuItemTitle(menuItemTmp->title);
         }
-
         // print item value
         _u8g2.setCursor(_menuValuesLeftOffset, yText);
-        if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {  // are we in edit mode?
+        if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
+        // Print item value in edit mode
         switch (menuItemTmp->linkedType) {
           case GEM_VAL_INTEGER:
               printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
@@ -404,7 +405,8 @@ void GEM_u8g2::printMenuItems() {
           #endif
         }
       }
-      else { // not in edit mode - just print value
+      else {
+        // not in edit mode - just print value
         printMenuItemValue(menuItemTmp, yDraw);
       }
       break;
@@ -532,6 +534,12 @@ void GEM_u8g2::menuItemSelect() {
     case GEM_ITEM_BUTTON:
       if (!menuItemTmp->readonly) {
         menuItemTmp->buttonAction();
+      }
+      break;
+    case GEM_ITEM_LINKED_VAL:
+      if (menuItemTmp->linkedPage != NULL){
+        _menuPageCurrent = menuItemTmp->linkedPage;
+        drawMenu();
       }
       break;
   }
