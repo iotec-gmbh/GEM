@@ -1,6 +1,6 @@
 /*
   GEM (a.k.a. Good Enough Menu) - Arduino library for creation of graphic multi-level menu with
-  editable menu items, such as variables (supports int, byte, float, double, boolean, char[17] data types)
+  editable menu items, such as variables (supports int, byte, float, double, bool, char[17] data types)
   and option selects. User-defined callback function can be specified to invoke when menu item is saved.
   
   Supports buttons that can invoke user-defined actions and create action-specific
@@ -142,11 +142,11 @@ void GEM_u8g2::setSplash(byte width, byte height, const unsigned char U8X8_PROGM
   _splash = {width, height, image};
 }
 
-void GEM_u8g2::hideVersion(boolean flag) {
+void GEM_u8g2::hideVersion(bool flag) {
   _enableVersion = !flag;
 }
 
-void GEM_u8g2::enableCyrillic(boolean flag) {
+void GEM_u8g2::enableCyrillic(bool flag) {
   _cyrillicEnabled = flag;
   if (_cyrillicEnabled) {
     _fontFamilies = {(uint8_t *)GEM_FONT_BIG_CYR, (uint8_t *)GEM_FONT_SMALL_CYR};
@@ -286,11 +286,11 @@ void GEM_u8g2::printMenuItemFull(char* str, int offset) {
   printMenuItemString(str, _menuItemTitleLength + _menuItemValueLength + offset);
 }
 
-byte GEM_u8g2::getMenuItemInsetOffset(boolean forSprite) {
+byte GEM_u8g2::getMenuItemInsetOffset(bool forSprite) {
   return _menuItemInsetOffset + (forSprite ? (_menuItemFontSize ? -1 : 0) : -1 ); // With additional offset for 6x8 sprites to compensate for smaller font size
 }
 
-byte GEM_u8g2::getCurrentItemTopOffset(boolean withInsetOffset, boolean forSprite) {
+byte GEM_u8g2::getCurrentItemTopOffset(bool withInsetOffset, bool forSprite) {
   return (_menuPageCurrent->currentItemNum % _menuItemsPerScreen) * _menuItemHeight + _menuPageScreenTopOffset + (withInsetOffset ? getMenuItemInsetOffset(forSprite) : 0);
 }
 
@@ -341,8 +341,8 @@ void GEM_u8g2::printMenuItems() {
               printMenuItemValue((char*)menuItemTmp->linkedVariable);
             }
             break;
-          case GEM_VAL_BOOLEAN:
-            if (*(boolean*)menuItemTmp->linkedVariable) {
+          case GEM_VAL_BOOL:
+            if (*(bool*)menuItemTmp->linkedVariable) {
               _u8g2.drawXBMP(_menuValuesLeftOffset, yDraw, checkboxChecked_width, checkboxChecked_height, checkboxChecked_bits);
             } else {
               _u8g2.drawXBMP(_menuValuesLeftOffset, yDraw, checkboxUnchecked_width, checkboxUnchecked_height, checkboxUnchecked_bits);
@@ -526,7 +526,7 @@ void GEM_u8g2::enterEditValueMode() {
       _editValueLength = GEM_STR_LEN - 1;
       initEditValueCursor();
       break;
-    case GEM_VAL_BOOLEAN:
+    case GEM_VAL_BOOL:
       checkboxToggle();
       drawMenu();
       break;
@@ -557,8 +557,8 @@ void GEM_u8g2::enterEditValueMode() {
 void GEM_u8g2::checkboxToggle() {
   GEMItem* menuItemTmp = _menuPageCurrent->getCurrentMenuItem();
   int topOffset = getCurrentItemTopOffset(true, true);
-  boolean checkboxValue = *(boolean*)menuItemTmp->linkedVariable;
-  *(boolean*)menuItemTmp->linkedVariable = !checkboxValue;
+  bool checkboxValue = *(bool*)menuItemTmp->linkedVariable;
+  *(bool*)menuItemTmp->linkedVariable = !checkboxValue;
   if (menuItemTmp->saveAction != nullptr) {
     menuItemTmp->saveAction();
     exitEditValue();
@@ -823,7 +823,7 @@ char* GEM_u8g2::trimString(char* str) {
 
 //====================== KEY DETECTION
 
-boolean GEM_u8g2::readyForKey() {
+bool GEM_u8g2::readyForKey() {
   if ( (context.loop == nullptr) ||
       ((context.loop != nullptr) && (context.allowExit)) ) {
     return true;
