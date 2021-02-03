@@ -370,39 +370,22 @@ void GEM_u8g2::printMenuItems() {
         if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
         // Print item value in edit mode
         switch (menuItemTmp->linkedType) {
+          // draw number in edit mode
           case GEM_VAL_INTEGER:
-              printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
-              drawEditValueCursor();
-            break;
           case GEM_VAL_BYTE:
-              printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
-              drawEditValueCursor();
-            break;
           case GEM_VAL_CHAR:
-              printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
-              drawEditValueCursor();
-            break;
-          case GEM_VAL_BOOLEAN:
-            printMenuItemValue(menuItemTmp, yDraw);
-            break;
-          case GEM_VAL_SELECT:
-            {
-              GEMSelect* select = menuItemTmp->select;
-              printMenuItemValue(select->getOptionNameByIndex(_valueSelectNum));
-              _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 7, yDraw, selectArrows_width, selectArrows_height, selectArrows_bits);
-              drawEditValueCursor();
-            }
-            break;
           #ifdef GEM_SUPPORT_FLOAT_EDIT
           case GEM_VAL_FLOAT:
-              printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
-              drawEditValueCursor();
-            break;
           case GEM_VAL_DOUBLE:
+          #endif
               printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
               drawEditValueCursor();
             break;
-          #endif
+          // draw item - there is no difference if in edit mode or not
+          case GEM_VAL_BOOLEAN:
+          case GEM_VAL_SELECT:
+              printMenuItemValue(menuItemTmp, yDraw);
+            break;
         }
       }
       else {
