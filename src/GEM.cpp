@@ -1,6 +1,6 @@
 /*
   GEM (a.k.a. Good Enough Menu) - Arduino library for creation of graphic multi-level menu with
-  editable menu items, such as variables (supports int, byte, float, double, boolean, char[17] data types)
+  editable menu items, such as variables (supports int, byte, float, double, bool, char[17] data types)
   and option selects. User-defined callback function can be specified to invoke when menu item is saved.
   
   Supports buttons that can invoke user-defined actions and create action-specific
@@ -126,7 +126,7 @@ void GEM::setSplash(const uint8_t PROGMEM *sprite) {
   _splash = sprite;
 }
 
-void GEM::hideVersion(boolean flag) {
+void GEM::hideVersion(bool flag) {
   _enableVersion = !flag;
 }
 
@@ -223,11 +223,11 @@ void GEM::printMenuItemFull(char* str, int offset) {
   printMenuItemString(str, _menuItemTitleLength + _menuItemValueLength + offset);
 }
 
-byte GEM::getMenuItemInsetOffset(boolean forSprite) {
+byte GEM::getMenuItemInsetOffset(bool forSprite) {
   return _menuItemInsetOffset + (forSprite ? (_menuItemFontSize ? -1 : 0) : 0 ); // With additional offset for 6x8 sprites to compensate for smaller font size
 }
 
-byte GEM::getCurrentItemTopOffset(boolean withInsetOffset, boolean forSprite) {
+byte GEM::getCurrentItemTopOffset(bool withInsetOffset, bool forSprite) {
   return (_menuPageCurrent->currentItemNum % _menuItemsPerScreen) * _menuItemHeight + _menuPageScreenTopOffset + (withInsetOffset ? getMenuItemInsetOffset(forSprite) : 0);
 }
 
@@ -261,8 +261,8 @@ void GEM::printMenuItems() {
           case GEM_VAL_CHAR:
             printMenuItemValue((char*)menuItemTmp->linkedVariable);
             break;
-          case GEM_VAL_BOOLEAN:
-            if (*(boolean*)menuItemTmp->linkedVariable) {
+          case GEM_VAL_BOOL:
+            if (*(bool*)menuItemTmp->linkedVariable) {
               _glcd.drawSprite(_menuValuesLeftOffset, yDraw, GEM_SPR_CHECKBOX_CHECKED, GLCD_MODE_NORMAL);
             } else {
               _glcd.drawSprite(_menuValuesLeftOffset, yDraw, GEM_SPR_CHECKBOX_UNCHECKED, GLCD_MODE_NORMAL);
@@ -370,7 +370,7 @@ void GEM::nextMenuItem() {
   } else {
     _menuPageCurrent->currentItemNum++;
   }
-  boolean redrawMenu = (_menuPageCurrent->itemsCount > 1 && _menuPageCurrent->currentItemNum % _menuItemsPerScreen == 0);
+  bool redrawMenu = (_menuPageCurrent->itemsCount > 1 && _menuPageCurrent->currentItemNum % _menuItemsPerScreen == 0);
   if (redrawMenu) {
     drawMenu();
   } else {
@@ -382,7 +382,7 @@ void GEM::prevMenuItem() {
   if (_menuPointerType != GEM_POINTER_DASH) {
     drawMenuPointer();
   }
-  boolean redrawMenu = (_menuPageCurrent->itemsCount > 1 && _menuPageCurrent->currentItemNum % _menuItemsPerScreen == 0);
+  bool redrawMenu = (_menuPageCurrent->itemsCount > 1 && _menuPageCurrent->currentItemNum % _menuItemsPerScreen == 0);
   if (_menuPageCurrent->currentItemNum == 0) {
     _menuPageCurrent->currentItemNum = _menuPageCurrent->itemsCount-1;
   } else {
@@ -448,7 +448,7 @@ void GEM::enterEditValueMode() {
       _editValueLength = GEM_STR_LEN - 1;
       initEditValueCursor();
       break;
-    case GEM_VAL_BOOLEAN:
+    case GEM_VAL_BOOL:
       checkboxToggle();
       break;
     case GEM_VAL_SELECT:
@@ -478,8 +478,8 @@ void GEM::enterEditValueMode() {
 void GEM::checkboxToggle() {
   GEMItem* menuItemTmp = _menuPageCurrent->getCurrentMenuItem();
   int topOffset = getCurrentItemTopOffset(true, true);
-  boolean checkboxValue = *(boolean*)menuItemTmp->linkedVariable;
-  *(boolean*)menuItemTmp->linkedVariable = !checkboxValue;
+  bool checkboxValue = *(bool*)menuItemTmp->linkedVariable;
+  *(bool*)menuItemTmp->linkedVariable = !checkboxValue;
   if (menuItemTmp->saveAction != nullptr) {
     menuItemTmp->saveAction();
     exitEditValue();
@@ -745,7 +745,7 @@ char* GEM::trimString(char* str) {
 
 //====================== KEY DETECTION
 
-boolean GEM::readyForKey() {
+bool GEM::readyForKey() {
   if ( (context.loop == nullptr) ||
       ((context.loop != nullptr) && (context.allowExit)) ) {
     return true;
