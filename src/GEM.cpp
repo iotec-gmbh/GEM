@@ -219,6 +219,57 @@ void GEM::printMenuItemValue(char* str, int offset, byte startPos) {
   printMenuItemString(str, _menuItemValueLength + offset, startPos);
 }
 
+void GEM::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw){
+
+  // check pointer
+  if (NULL == menuItemTmp){
+    return;
+  }
+
+  // print item value on screen - print conversion dependent on tpye
+  switch (menuItemTmp->linkedType) {
+    case GEM_VAL_INTEGER:
+      itoa(*(int*)menuItemTmp->linkedVariable, _valueString, 10);
+      printMenuItemValue(_valueString);
+      break;
+    case GEM_VAL_BYTE:
+      itoa(*(byte*)menuItemTmp->linkedVariable, _valueString, 10);
+      printMenuItemValue(_valueString);
+      break;
+    case GEM_VAL_CHAR:
+      printMenuItemValue((char*)menuItemTmp->linkedVariable);
+      break;
+    case GEM_VAL_BOOL:
+      if (*(bool*)menuItemTmp->linkedVariable) {
+        _glcd.drawSprite(_menuValuesLeftOffset, yDraw, GEM_SPR_CHECKBOX_CHECKED, GLCD_MODE_NORMAL);
+      } else {
+        _glcd.drawSprite(_menuValuesLeftOffset, yDraw, GEM_SPR_CHECKBOX_UNCHECKED, GLCD_MODE_NORMAL);
+      }
+      break;
+    case GEM_VAL_SELECT:
+      {
+        GEMSelect* select = menuItemTmp->select;
+        printMenuItemValue(select->getSelectedOptionName(menuItemTmp->linkedVariable));
+        _glcd.drawSprite(_glcd.xdim-7, yDraw, GEM_SPR_SELECT_ARROWS, GLCD_MODE_NORMAL);
+      }
+      break;
+    #ifdef GEM_SUPPORT_FLOAT_EDIT
+    case GEM_VAL_FLOAT:
+      // sprintf(_valueString,"%.6f", *(float*)menuItemTmp->linkedVariable); // May work for non-AVR boards
+      dtostrf(*(float*)menuItemTmp->linkedVariable, menuItemTmp->precision + 1, menuItemTmp->precision, _valueString);
+      printMenuItemValue(_valueString);
+      break;
+    case GEM_VAL_DOUBLE:
+      // sprintf(_valueString,"%.6f", *(double*)menuItemTmp->linkedVariable); // May work for non-AVR boards
+      dtostrf(*(double*)menuItemTmp->linkedVariable, menuItemTmp->precision + 1, menuItemTmp->precision, _valueString);
+      printMenuItemValue(_valueString);
+      break;
+    #endif
+  }
+  // ensure srting termination
+  memset(_valueString, '\0', GEM_STR_LEN - 1);
+}
+
 void GEM::printMenuItemFull(char* str, int offset) {
   printMenuItemString(str, _menuItemTitleLength + _menuItemValueLength + offset);
 }
@@ -241,6 +292,7 @@ void GEM::printMenuItems() {
     byte yDraw = y + getMenuItemInsetOffset(true);
     switch (menuItemTmp->type) {
       case GEM_ITEM_VAL:
+        // print item title with edit symbol, if edit is enabled
         _glcd.setX(5);
         if (menuItemTmp->readonly) {
           printMenuItemTitle(menuItemTmp->title, -1);
@@ -248,45 +300,9 @@ void GEM::printMenuItems() {
         } else {
           printMenuItemTitle(menuItemTmp->title);
         }
+        // print item value
         _glcd.setX(_menuValuesLeftOffset);
-        switch (menuItemTmp->linkedType) {
-          case GEM_VAL_INTEGER:
-            itoa(*(int*)menuItemTmp->linkedVariable, _valueString, 10);
-            printMenuItemValue(_valueString);
-            break;
-          case GEM_VAL_BYTE:
-            itoa(*(byte*)menuItemTmp->linkedVariable, _valueString, 10);
-            printMenuItemValue(_valueString);
-            break;
-          case GEM_VAL_CHAR:
-            printMenuItemValue((char*)menuItemTmp->linkedVariable);
-            break;
-          case GEM_VAL_BOOL:
-            if (*(bool*)menuItemTmp->linkedVariable) {
-              _glcd.drawSprite(_menuValuesLeftOffset, yDraw, GEM_SPR_CHECKBOX_CHECKED, GLCD_MODE_NORMAL);
-            } else {
-              _glcd.drawSprite(_menuValuesLeftOffset, yDraw, GEM_SPR_CHECKBOX_UNCHECKED, GLCD_MODE_NORMAL);
-            }
-            break;
-          case GEM_VAL_SELECT:
-            {
-              GEMSelect* select = menuItemTmp->select;
-              printMenuItemValue(select->getSelectedOptionName(menuItemTmp->linkedVariable));
-              _glcd.drawSprite(_glcd.xdim-7, yDraw, GEM_SPR_SELECT_ARROWS, GLCD_MODE_NORMAL);
-            }
-            break;
-          #ifdef GEM_SUPPORT_FLOAT_EDIT
-          case GEM_VAL_FLOAT:
-            // sprintf(_valueString,"%.6f", *(float*)menuItemTmp->linkedVariable); // May work for non-AVR boards
-            dtostrf(*(float*)menuItemTmp->linkedVariable, menuItemTmp->precision + 1, menuItemTmp->precision, _valueString);
-            printMenuItemValue(_valueString);
-            break;
-          case GEM_VAL_DOUBLE:
-            // sprintf(_valueString,"%.6f", *(double*)menuItemTmp->linkedVariable); // May work for non-AVR boards
-            dtostrf(*(double*)menuItemTmp->linkedVariable, menuItemTmp->precision + 1, menuItemTmp->precision, _valueString);
-            printMenuItemValue(_valueString);
-            break;
-          #endif
+        printMenuItemValue(menuItemTmp, yDraw);
         }
         break;
       case GEM_ITEM_LINK:
@@ -313,12 +329,24 @@ void GEM::printMenuItems() {
         }
         _glcd.drawSprite(5, yDraw, GEM_SPR_ARROW_BTN, GLCD_MODE_NORMAL);
         break;
+      case GEM_ITEM_LINKED_VAL:
+        _glcd.setX(5);
+        // print title
+        printMenuItemTitle(menuItemTmp->title);
+
+        // print value
+        _glcd.setX(_menuValuesLeftOffset);
+        printMenuItemValue(menuItemTmp, yDraw);
+
+        // draw link arrow
+        _glcd.drawSprite(_glcd.xdim-8, yDraw, GEM_SPR_ARROW_RIGHT, GLCD_MODE_NORMAL);
+        break;
+
     }
     menuItemTmp = menuItemTmp->getMenuItemNext();
     y += _menuItemHeight;
     i++;
   }
-  memset(_valueString, '\0', GEM_STR_LEN - 1);
 }
 
 void GEM::drawMenuPointer() {
@@ -417,6 +445,12 @@ void GEM::menuItemSelect() {
     case GEM_ITEM_BUTTON:
       if (!menuItemTmp->readonly) {
         menuItemTmp->buttonAction();
+      }
+      break;
+    case GEM_ITEM_LINK:
+      if (menuItemTmp->linkedPage != NULL) {
+        _menuPageCurrent = menuItemTmp->linkedPage;
+        drawMenu();
       }
       break;
   }

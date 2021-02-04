@@ -282,6 +282,59 @@ void GEM_u8g2::printMenuItemValue(char* str, int offset, byte startPos) {
   printMenuItemString(str, _menuItemValueLength + offset, startPos);
 }
 
+void GEM_u8g2::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw)
+{
+  // check pointer
+  if (NULL == menuItemTmp){
+    return;
+  }
+
+  // print item value on screen - print conversion dependent on tpye
+  char valueStringTmp[GEM_STR_LEN];
+  memset(valueStringTmp, '\0', GEM_STR_LEN - 1);
+  switch (menuItemTmp->linkedType) {
+    case GEM_VAL_INTEGER:
+        itoa(*(int*)menuItemTmp->linkedVariable, valueStringTmp, 10);
+        printMenuItemValue(valueStringTmp);
+      break;
+    case GEM_VAL_BYTE:
+        itoa(*(byte*)menuItemTmp->linkedVariable, valueStringTmp, 10);
+        printMenuItemValue(valueStringTmp);
+      break;
+    case GEM_VAL_CHAR:
+        printMenuItemValue((char*)menuItemTmp->linkedVariable);
+      break;
+    case GEM_VAL_BOOL:
+      if (*(bool*)menuItemTmp->linkedVariable) {
+        _u8g2.drawXBMP(_menuValuesLeftOffset, yDraw, checkboxChecked_width, checkboxChecked_height, checkboxChecked_bits);
+      } else {
+        _u8g2.drawXBMP(_menuValuesLeftOffset, yDraw, checkboxUnchecked_width, checkboxUnchecked_height, checkboxUnchecked_bits);
+      }
+      break;
+    case GEM_VAL_SELECT:
+      {
+        GEMSelect* select = menuItemTmp->select;
+          printMenuItemValue(select->getSelectedOptionName(menuItemTmp->linkedVariable));
+          _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 7, yDraw, selectArrows_width, selectArrows_height, selectArrows_bits);
+      }
+      break;
+    #ifdef GEM_SUPPORT_FLOAT_EDIT
+    case GEM_VAL_FLOAT:
+        // sprintf(valueStringTmp,"%.6f", *(float*)menuItemTmp->linkedVariable); // May work for non-AVR boards
+        dtostrf(*(float*)menuItemTmp->linkedVariable, menuItemTmp->precision + 1, menuItemTmp->precision, valueStringTmp);
+        printMenuItemValue(valueStringTmp);
+      break;
+    case GEM_VAL_DOUBLE:
+        // sprintf(valueStringTmp,"%.6f", *(double*)menuItemTmp->linkedVariable); // May work for non-AVR boards
+        dtostrf(*(double*)menuItemTmp->linkedVariable, menuItemTmp->precision + 1, menuItemTmp->precision, valueStringTmp);
+        printMenuItemValue(valueStringTmp);
+      break;
+    #endif
+  }
+  // ensure srting termination
+  memset(valueStringTmp, '\0', GEM_STR_LEN - 1);
+}
+
 void GEM_u8g2::printMenuItemFull(char* str, int offset) {
   printMenuItemString(str, _menuItemTitleLength + _menuItemValueLength + offset);
 }
@@ -299,12 +352,12 @@ void GEM_u8g2::printMenuItems() {
   GEMItem* menuItemTmp = (_menuPageCurrent)->getMenuItem(currentPageScreenNum * _menuItemsPerScreen);
   byte y = _menuPageScreenTopOffset;
   byte i = 0;
-  char valueStringTmp[GEM_STR_LEN];
   while (menuItemTmp != 0 && i < _menuItemsPerScreen) {
     byte yText = y + getMenuItemInsetOffset();
     byte yDraw = y + getMenuItemInsetOffset(true);
     switch (menuItemTmp->type) {
       case GEM_ITEM_VAL:
+        // print item title with edit symbol, if edit is enabled
         _u8g2.setCursor(5, yText);
         if (menuItemTmp->readonly) {
           printMenuItemTitle(menuItemTmp->title, -1);
@@ -312,79 +365,34 @@ void GEM_u8g2::printMenuItems() {
         } else {
           printMenuItemTitle(menuItemTmp->title);
         }
-        
+        // print item value
         _u8g2.setCursor(_menuValuesLeftOffset, yText);
+        if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
+        // Print item value in edit mode
         switch (menuItemTmp->linkedType) {
+          // draw number in edit mode
           case GEM_VAL_INTEGER:
-            if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
-              printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
-              drawEditValueCursor();
-            } else {
-              itoa(*(int*)menuItemTmp->linkedVariable, valueStringTmp, 10);
-              printMenuItemValue(valueStringTmp);
-            }
-            break;
           case GEM_VAL_BYTE:
-            if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
-              printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
-              drawEditValueCursor();
-            } else {
-              itoa(*(byte*)menuItemTmp->linkedVariable, valueStringTmp, 10);
-              printMenuItemValue(valueStringTmp);
-            }
-            break;
           case GEM_VAL_CHAR:
-            if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
-              printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
-              drawEditValueCursor();
-            } else {
-              printMenuItemValue((char*)menuItemTmp->linkedVariable);
-            }
-            break;
-          case GEM_VAL_BOOL:
-            if (*(bool*)menuItemTmp->linkedVariable) {
-              _u8g2.drawXBMP(_menuValuesLeftOffset, yDraw, checkboxChecked_width, checkboxChecked_height, checkboxChecked_bits);
-            } else {
-              _u8g2.drawXBMP(_menuValuesLeftOffset, yDraw, checkboxUnchecked_width, checkboxUnchecked_height, checkboxUnchecked_bits);
-            }
-            break;
-          case GEM_VAL_SELECT:
-            {
-              GEMSelect* select = menuItemTmp->select;
-              if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
-                printMenuItemValue(select->getOptionNameByIndex(_valueSelectNum));
-                _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 7, yDraw, selectArrows_width, selectArrows_height, selectArrows_bits);
-                drawEditValueCursor();
-              } else {
-                printMenuItemValue(select->getSelectedOptionName(menuItemTmp->linkedVariable));
-                _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 7, yDraw, selectArrows_width, selectArrows_height, selectArrows_bits);
-              }
-            }
-            break;
           #ifdef GEM_SUPPORT_FLOAT_EDIT
           case GEM_VAL_FLOAT:
-            if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
-              printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
-              drawEditValueCursor();
-            } else {
-              // sprintf(valueStringTmp,"%.6f", *(float*)menuItemTmp->linkedVariable); // May work for non-AVR boards
-              dtostrf(*(float*)menuItemTmp->linkedVariable, menuItemTmp->precision + 1, menuItemTmp->precision, valueStringTmp);
-              printMenuItemValue(valueStringTmp);
-            }
-            break;
           case GEM_VAL_DOUBLE:
-            if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
+          #endif
               printMenuItemValue(_valueString, 0, _editValueVirtualCursorPosition - _editValueCursorPosition);
               drawEditValueCursor();
-            } else {
-              // sprintf(valueStringTmp,"%.6f", *(double*)menuItemTmp->linkedVariable); // May work for non-AVR boards
-              dtostrf(*(double*)menuItemTmp->linkedVariable, menuItemTmp->precision + 1, menuItemTmp->precision, valueStringTmp);
-              printMenuItemValue(valueStringTmp);
-            }
             break;
-          #endif
+          // draw item - there is no difference if in edit mode or not
+          case GEM_VAL_BOOL:
+          case GEM_VAL_SELECT:
+              printMenuItemValue(menuItemTmp, yDraw);
+            break;
         }
-        break;
+      }
+      else {
+        // not in edit mode - just print value
+        printMenuItemValue(menuItemTmp, yDraw);
+      }
+      break;
       case GEM_ITEM_LINK:
         _u8g2.setCursor(5, yText);
         if (menuItemTmp->readonly) {
@@ -409,12 +417,23 @@ void GEM_u8g2::printMenuItems() {
         }
         _u8g2.drawXBMP(5, yDraw, arrowBtn_width, arrowBtn_height, arrowBtn_bits);
         break;
+      case GEM_ITEM_LINKED_VAL:
+        // print title
+        _u8g2.setCursor(5, yText);
+        printMenuItemTitle(menuItemTmp->title);
+
+        // print item value
+        _u8g2.setCursor(_menuValuesLeftOffset, yText);
+        printMenuItemValue(menuItemTmp, yDraw);
+
+        // draw the link arrow
+        _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 8, yDraw, arrowRight_width, arrowRight_height, arrowRight_bits);
+        break;
     }
     menuItemTmp = menuItemTmp->getMenuItemNext();
     y += _menuItemHeight;
     i++;
   }
-  memset(valueStringTmp, '\0', GEM_STR_LEN - 1);
 }
 
 void GEM_u8g2::drawMenuPointer() {
@@ -498,6 +517,12 @@ void GEM_u8g2::menuItemSelect() {
     case GEM_ITEM_BUTTON:
       if (!menuItemTmp->readonly) {
         menuItemTmp->buttonAction();
+      }
+      break;
+    case GEM_ITEM_LINKED_VAL:
+      if (menuItemTmp->linkedPage != NULL){
+        _menuPageCurrent = menuItemTmp->linkedPage;
+        drawMenu();
       }
       break;
   }
