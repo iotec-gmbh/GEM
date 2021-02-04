@@ -244,7 +244,7 @@ GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMPage* linkedPage_)
 { }
 
 GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
 GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMPage* linkedPage_)
