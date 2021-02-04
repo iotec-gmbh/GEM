@@ -116,7 +116,7 @@ class GEMItem {
     /* 
       Constructors for menu item that represents variable, that are linked to another screen
       @param 'title_' - title of the menu item displayed on the screen
-      @param 'linkedVariable_' - reference to variable that menu item is associated with (either byte, int, char*, boolean, float, or double)
+      @param 'linkedVariable_' - reference to variable that menu item is associated with (either byte, int, char*, bool, float, or double)
       @param 'linkedPage_' - reference to GEMPage menu page that menu item is associated with
       */
     GEMItem(char* title_, byte& linkedVariable_, GEMPage* linkedPage_);
@@ -125,8 +125,8 @@ class GEMItem {
     GEMItem(char* title_, int& linkedVariable_, GEMPage& linkedPage_);
     GEMItem(char* title_, char* linkedVariable_, GEMPage* linkedPage_);
     GEMItem(char* title_, char* linkedVariable_, GEMPage& linkedPage_);
-    GEMItem(char* title_, boolean& linkedVariable_, GEMPage* linkedPage_);
-    GEMItem(char* title_, boolean& linkedVariable_, GEMPage& linkedPage_);
+    GEMItem(char* title_, bool& linkedVariable_, GEMPage* linkedPage_);
+    GEMItem(char* title_, bool& linkedVariable_, GEMPage& linkedPage_);
     GEMItem(char* title_, float& linkedVariable_, GEMPage* linkedPage_);
     GEMItem(char* title_, float& linkedVariable_, GEMPage& linkedPage_);
     GEMItem(char* title_, double& linkedVariable_, GEMPage* linkedPage_);
