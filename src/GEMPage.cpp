@@ -35,99 +35,104 @@
 #include <Arduino.h>
 #include "GEMPage.h"
 
-GEMPage::GEMPage(char* title_, void (*exitAction_)())
-  : title(title_)
-  , exitAction(exitAction_)
+GEMPage::GEMPage(const char* title_, void (*exitAction_)())
+    : title(title_)
+    , exitAction(exitAction_)
+{ }
+
+GEMPage::GEMPage(const __FlashStringHelper* title_, void (*exitAction_)())
+    : title(title_->c_str())
+    , exitAction(exitAction_)
 { }
 
 void GEMPage::addMenuItem(GEMItem& menuItem) {
-  // Prevent adding menu item that was already added to another (or the same) page
-  if (menuItem.parentPage == nullptr) {
-    if (itemsCountTotal == 0) {
-      // If menu page is empty, link supplied menu item from within page directly (this will be the first menu item in a page)
-      _menuItem = &menuItem;
-    } else {
-      // If menu page is not empty, link supplied menu item from within the last menu item of the page
-      getMenuItem(itemsCountTotal-1, true)->menuItemNext = &menuItem;
+    // Prevent adding menu item that was already added to another (or the same) page
+    if (menuItem.parentPage == nullptr) {
+        if (itemsCountTotal == 0) {
+            // If menu page is empty, link supplied menu item from within page directly (this will be the first menu item in a page)
+            _menuItem = &menuItem;
+        } else {
+            // If menu page is not empty, link supplied menu item from within the last menu item of the page
+            getMenuItem(itemsCountTotal-1, true)->menuItemNext = &menuItem;
+        }
+        menuItem.parentPage = this;
+        if (!menuItem.hidden) {
+            itemsCount++;
+        }
+        itemsCountTotal++;
+        currentItemNum = (_menuItemBack.linkedPage != nullptr) ? 1 : 0;
     }
-    menuItem.parentPage = this;
-    if (!menuItem.hidden) {
-      itemsCount++;
-    }
-    itemsCountTotal++;
-    currentItemNum = (_menuItemBack.linkedPage != nullptr) ? 1 : 0;
-  }
 }
 
 void GEMPage::setParentMenuPage(GEMPage& parentMenuPage) {
-  _menuItemBack.type = GEM_ITEM_BACK;
-  _menuItemBack.linkedPage = &parentMenuPage;
-  // Back button menu item should be always inserted at first position in list
-  GEMItem* menuItemTmp = _menuItem;
-  _menuItem = &_menuItemBack;
-  if (menuItemTmp != 0) {
-    _menuItemBack.menuItemNext = menuItemTmp;
-  }
-  itemsCount++;
-  itemsCountTotal++;
-  currentItemNum = (itemsCount > 1) ? 1 : 0;
+    _menuItemBack.type = GEM_ITEM_BACK;
+    _menuItemBack.linkedPage = &parentMenuPage;
+    // Back button menu item should be always inserted at first position in list
+    GEMItem* menuItemTmp = _menuItem;
+    _menuItem = &_menuItemBack;
+    if (menuItemTmp != 0) {
+        _menuItemBack.menuItemNext = menuItemTmp;
+    }
+    itemsCount++;
+    itemsCountTotal++;
+    currentItemNum = (itemsCount > 1) ? 1 : 0;
 }
 
-void GEMPage::setTitle(char* title_) {
-  title = title_;
+void GEMPage::setTitle(const char* title_) {
+    title = title_;
 }
 
-char* GEMPage::getTitle() {
-  return title;
+const char* GEMPage::getTitle() {
+    return title;
 }
 
 GEMItem* GEMPage::getMenuItem(byte index, bool total) {
-  GEMItem* menuItemTmp = (_menuItem->hidden) ? _menuItem->getMenuItemNext() : _menuItem;
-  for (byte i=0; i<index; i++) {
-    menuItemTmp = (total) ? menuItemTmp->menuItemNext : menuItemTmp->getMenuItemNext();
-  }
-  return menuItemTmp;
+    GEMItem* menuItemTmp = (_menuItem->hidden) ? _menuItem->getMenuItemNext() : _menuItem;
+    for (byte i=0; i<index; i++) {
+        menuItemTmp = (total) ? menuItemTmp->menuItemNext : menuItemTmp->getMenuItemNext();
+    }
+    return menuItemTmp;
 }
 
 GEMItem* GEMPage::getCurrentMenuItem() {
-  return getMenuItem(currentItemNum);
+    return getMenuItem(currentItemNum);
 }
 
 int GEMPage::getMenuItemNum(GEMItem& menuItem) {
-  GEMItem* menuItemTmp = (_menuItem->hidden) ? _menuItem->getMenuItemNext() : _menuItem;
-  for (byte i=0; i<itemsCount; i++) {
-    if (menuItemTmp == &menuItem) {
-      return i;
+    GEMItem* menuItemTmp = (_menuItem->hidden) ? _menuItem->getMenuItemNext() : _menuItem;
+    for (byte i=0; i<itemsCount; i++) {
+        if (menuItemTmp == &menuItem) {
+            return i;
+        }
+        menuItemTmp = menuItemTmp->getMenuItemNext();
     }
-    menuItemTmp = menuItemTmp->getMenuItemNext();
-  }
-  return -1;
+    return -1;
 }
 
 void GEMPage::hideMenuItem(GEMItem& menuItem) {
-  int menuItemNum = getMenuItemNum(menuItem);
-  menuItem.hidden = true;
-  itemsCount--;
-  if (menuItemNum <= currentItemNum) {
-    if (currentItemNum > 0) {
-      currentItemNum--;
+    int menuItemNum = getMenuItemNum(menuItem);
+    menuItem.hidden = true;
+    itemsCount--;
+    if (menuItemNum <= currentItemNum) {
+        if (currentItemNum > 0) {
+            currentItemNum--;
+        }
     }
-  }
-  if (_menuItemBack.linkedPage != nullptr && itemsCount == 1) {
-    currentItemNum = 0;
-  }
+    if (_menuItemBack.linkedPage != nullptr && itemsCount == 1) {
+        currentItemNum = 0;
+    }
 }
 
 void GEMPage::showMenuItem(GEMItem& menuItem) {
-  int menuItemNum = getMenuItemNum(menuItem);
-  menuItem.hidden = false;
-  itemsCount++;
-  if (menuItemNum < currentItemNum) {
-    if (currentItemNum < itemsCount-1) {
-      currentItemNum++;
+    int menuItemNum = getMenuItemNum(menuItem);
+    menuItem.hidden = false;
+    itemsCount++;
+    if (menuItemNum < currentItemNum) {
+        if (currentItemNum < itemsCount-1) {
+            currentItemNum++;
+        }
     }
-  }
-  if (_menuItemBack.linkedPage != nullptr && itemsCount > 1) {
-    currentItemNum = 1;
-  }
+    if (_menuItemBack.linkedPage != nullptr && itemsCount > 1) {
+        currentItemNum = 1;
+    }
 }
