@@ -257,7 +257,7 @@ GEMItem::GEMItem(const char* title_, int& linkedVariable_, GEMPage* linkedPage_)
 { }
 
 GEMItem::GEMItem(const char* title_, int& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
 GEMItem::GEMItem(const char* title_, char* linkedVariable_, GEMPage* linkedPage_)
@@ -270,7 +270,7 @@ GEMItem::GEMItem(const char* title_, char* linkedVariable_, GEMPage* linkedPage_
 { }
 
 GEMItem::GEMItem(const char* title_, char* linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
 GEMItem::GEMItem(const char* title_, bool& linkedVariable_, GEMPage* linkedPage_)
@@ -283,7 +283,7 @@ GEMItem::GEMItem(const char* title_, bool& linkedVariable_, GEMPage* linkedPage_
 { }
 
 GEMItem::GEMItem(const char* title_, bool& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
 GEMItem::GEMItem(const char* title_, float& linkedVariable_, GEMPage* linkedPage_)
@@ -298,7 +298,7 @@ GEMItem::GEMItem(const char* title_, float& linkedVariable_, GEMPage* linkedPage
 
 
 GEMItem::GEMItem(const char* title_, float& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
 GEMItem::GEMItem(const char* title_, double& linkedVariable_, GEMPage* linkedPage_)
