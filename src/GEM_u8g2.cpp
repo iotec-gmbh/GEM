@@ -240,7 +240,7 @@ void GEM_u8g2::drawTitleBar() {
  _u8g2.setFont(_menuItemFontSize ? _fontFamilies.small : _fontFamilies.big);
 }
 
-void GEM_u8g2::printMenuItemString(char* str, byte num, byte startPos) {
+void GEM_u8g2::printMenuItemString(const char* str, byte num, byte startPos) {
   if (_cyrillicEnabled) {
 
     byte j = 0;
@@ -274,11 +274,11 @@ void GEM_u8g2::printMenuItemString(char* str, byte num, byte startPos) {
   }
 }
 
-void GEM_u8g2::printMenuItemTitle(char* str, int offset) {
+void GEM_u8g2::printMenuItemTitle(const char* str, int offset) {
   printMenuItemString(str, _menuItemTitleLength + offset);
 }
 
-void GEM_u8g2::printMenuItemValue(char* str, int offset, byte startPos) {
+void GEM_u8g2::printMenuItemValue(const char* str, int offset, byte startPos) {
   printMenuItemString(str, _menuItemValueLength + offset, startPos);
 }
 
@@ -302,7 +302,7 @@ void GEM_u8g2::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw)
         printMenuItemValue(valueStringTmp);
       break;
     case GEM_VAL_CHAR:
-        printMenuItemValue((char*)menuItemTmp->linkedVariable);
+        printMenuItemValue((const char*)menuItemTmp->linkedVariable);
       break;
     case GEM_VAL_BOOL:
       if (*(bool*)menuItemTmp->linkedVariable) {
@@ -335,7 +335,7 @@ void GEM_u8g2::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw)
   memset(valueStringTmp, '\0', GEM_STR_LEN - 1);
 }
 
-void GEM_u8g2::printMenuItemFull(char* str, int offset) {
+void GEM_u8g2::printMenuItemFull(const char* str, int offset) {
   printMenuItemString(str, _menuItemTitleLength + _menuItemValueLength + offset);
 }
 
@@ -547,7 +547,7 @@ void GEM_u8g2::enterEditValueMode() {
       initEditValueCursor();
       break;
     case GEM_VAL_CHAR:
-      strcpy(_valueString, (char*)menuItemTmp->linkedVariable);
+      strcpy(_valueString, (const char*)menuItemTmp->linkedVariable);
       _editValueLength = GEM_STR_LEN - 1;
       initEditValueCursor();
       break;

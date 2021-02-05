@@ -36,7 +36,7 @@
 #include "GEMItem.h"
 #include "constants.h"
 
-GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMSelect& select_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, byte& linkedVariable_, GEMSelect& select_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -45,7 +45,7 @@ GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMSelect& select_, void (
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMSelect& select_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, int& linkedVariable_, GEMSelect& select_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -54,7 +54,7 @@ GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMSelect& select_, void (*
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMSelect& select_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, char* linkedVariable_, GEMSelect& select_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -63,7 +63,7 @@ GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMSelect& select_, void (
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMSelect& select_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, float& linkedVariable_, GEMSelect& select_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -72,7 +72,7 @@ GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMSelect& select_, void 
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMSelect& select_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, double& linkedVariable_, GEMSelect& select_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -83,7 +83,7 @@ GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMSelect& select_, void
 
 //---
 
-GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMSelect& select_, bool readonly_)
+GEMItem::GEMItem(const char* title_, byte& linkedVariable_, GEMSelect& select_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -92,7 +92,7 @@ GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMSelect& select_, bool r
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMSelect& select_, bool readonly_)
+GEMItem::GEMItem(const char* title_, int& linkedVariable_, GEMSelect& select_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -101,7 +101,7 @@ GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMSelect& select_, bool re
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMSelect& select_, bool readonly_)
+GEMItem::GEMItem(const char* title_, char* linkedVariable_, GEMSelect& select_, bool readonly_)
   : title(title_)
   , linkedVariable(linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -110,7 +110,7 @@ GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMSelect& select_, bool r
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMSelect& select_, bool readonly_)
+GEMItem::GEMItem(const char* title_, float& linkedVariable_, GEMSelect& select_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -119,7 +119,7 @@ GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMSelect& select_, bool 
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMSelect& select_, bool readonly_)
+GEMItem::GEMItem(const char* title_, double& linkedVariable_, GEMSelect& select_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_SELECT)
@@ -130,7 +130,7 @@ GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMSelect& select_, bool
 
 //---
 
-GEMItem::GEMItem(char* title_, byte& linkedVariable_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, byte& linkedVariable_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_BYTE)
@@ -138,7 +138,7 @@ GEMItem::GEMItem(char* title_, byte& linkedVariable_, void (*saveAction_)())
   , saveAction(saveAction_)
 { }
 
-GEMItem::GEMItem(char* title_, int& linkedVariable_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, int& linkedVariable_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_INTEGER)
@@ -146,7 +146,7 @@ GEMItem::GEMItem(char* title_, int& linkedVariable_, void (*saveAction_)())
   , saveAction(saveAction_)
 { }
 
-GEMItem::GEMItem(char* title_, char* linkedVariable_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, char* linkedVariable_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(linkedVariable_)
   , linkedType(GEM_VAL_CHAR)
@@ -154,7 +154,7 @@ GEMItem::GEMItem(char* title_, char* linkedVariable_, void (*saveAction_)())
   , saveAction(saveAction_)
 { }
 
-GEMItem::GEMItem(char* title_, bool& linkedVariable_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, bool& linkedVariable_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_BOOL)
@@ -162,7 +162,7 @@ GEMItem::GEMItem(char* title_, bool& linkedVariable_, void (*saveAction_)())
   , saveAction(saveAction_)
 { }
 
-GEMItem::GEMItem(char* title_, float& linkedVariable_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, float& linkedVariable_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_FLOAT)
@@ -171,7 +171,7 @@ GEMItem::GEMItem(char* title_, float& linkedVariable_, void (*saveAction_)())
   , saveAction(saveAction_)
 { }
 
-GEMItem::GEMItem(char* title_, double& linkedVariable_, void (*saveAction_)())
+GEMItem::GEMItem(const char* title_, double& linkedVariable_, void (*saveAction_)())
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_DOUBLE)
@@ -182,7 +182,7 @@ GEMItem::GEMItem(char* title_, double& linkedVariable_, void (*saveAction_)())
 
 //---
 
-GEMItem::GEMItem(char* title_, byte& linkedVariable_, bool readonly_)
+GEMItem::GEMItem(const char* title_, byte& linkedVariable_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_BYTE)
@@ -190,7 +190,7 @@ GEMItem::GEMItem(char* title_, byte& linkedVariable_, bool readonly_)
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, int& linkedVariable_, bool readonly_)
+GEMItem::GEMItem(const char* title_, int& linkedVariable_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_INTEGER)
@@ -198,7 +198,7 @@ GEMItem::GEMItem(char* title_, int& linkedVariable_, bool readonly_)
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, char* linkedVariable_, bool readonly_)
+GEMItem::GEMItem(const char* title_, char* linkedVariable_, bool readonly_)
   : title(title_)
   , linkedVariable(linkedVariable_)
   , linkedType(GEM_VAL_CHAR)
@@ -206,7 +206,7 @@ GEMItem::GEMItem(char* title_, char* linkedVariable_, bool readonly_)
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, bool& linkedVariable_, bool readonly_)
+GEMItem::GEMItem(const char* title_, bool& linkedVariable_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_BOOL)
@@ -214,7 +214,7 @@ GEMItem::GEMItem(char* title_, bool& linkedVariable_, bool readonly_)
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, float& linkedVariable_, bool readonly_)
+GEMItem::GEMItem(const char* title_, float& linkedVariable_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_FLOAT)
@@ -223,7 +223,7 @@ GEMItem::GEMItem(char* title_, float& linkedVariable_, bool readonly_)
   , type(GEM_ITEM_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, double& linkedVariable_, bool readonly_)
+GEMItem::GEMItem(const char* title_, double& linkedVariable_, bool readonly_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedType(GEM_VAL_DOUBLE)
@@ -234,7 +234,7 @@ GEMItem::GEMItem(char* title_, double& linkedVariable_, bool readonly_)
 
 //---
 
-GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMPage* linkedPage_)
+GEMItem::GEMItem(const char* title_, byte& linkedVariable_, GEMPage* linkedPage_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedPage(linkedPage_)
@@ -243,11 +243,11 @@ GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMPage* linkedPage_)
   , type(GEM_ITEM_LINKED_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, byte& linkedVariable_, GEMPage& linkedPage_)
+GEMItem::GEMItem(const char* title_, byte& linkedVariable_, GEMPage& linkedPage_)
   : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
-GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMPage* linkedPage_)
+GEMItem::GEMItem(const char* title_, int& linkedVariable_, GEMPage* linkedPage_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedPage(linkedPage_)
@@ -256,11 +256,11 @@ GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMPage* linkedPage_)
   , type(GEM_ITEM_LINKED_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, int& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+GEMItem::GEMItem(const char* title_, int& linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
-GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMPage* linkedPage_)
+GEMItem::GEMItem(const char* title_, char* linkedVariable_, GEMPage* linkedPage_)
   : title(title_)
   , linkedVariable(linkedVariable_)
   , linkedPage(linkedPage_)
@@ -269,11 +269,11 @@ GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMPage* linkedPage_)
   , type(GEM_ITEM_LINKED_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, char* linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+GEMItem::GEMItem(const char* title_, char* linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
-GEMItem::GEMItem(char* title_, bool& linkedVariable_, GEMPage* linkedPage_)
+GEMItem::GEMItem(const char* title_, bool& linkedVariable_, GEMPage* linkedPage_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedPage(linkedPage_)
@@ -282,11 +282,11 @@ GEMItem::GEMItem(char* title_, bool& linkedVariable_, GEMPage* linkedPage_)
   , type(GEM_ITEM_LINKED_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, bool& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+GEMItem::GEMItem(const char* title_, bool& linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
-GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMPage* linkedPage_)
+GEMItem::GEMItem(const char* title_, float& linkedVariable_, GEMPage* linkedPage_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedPage(linkedPage_)
@@ -297,11 +297,11 @@ GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMPage* linkedPage_)
 { }
 
 
-GEMItem::GEMItem(char* title_, float& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+GEMItem::GEMItem(const char* title_, float& linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
-GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMPage* linkedPage_)
+GEMItem::GEMItem(const char* title_, double& linkedVariable_, GEMPage* linkedPage_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
   , linkedPage(linkedPage_)
@@ -311,38 +311,42 @@ GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMPage* linkedPage_)
   , type(GEM_ITEM_LINKED_VAL)
 { }
 
-GEMItem::GEMItem(char* title_, double& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+GEMItem::GEMItem(const char* title_, double& linkedVariable_, GEMPage& linkedPage_)
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
 //---
 
-GEMItem::GEMItem(char* title_, GEMPage& linkedPage_, bool readonly_)
+GEMItem::GEMItem(const char* title_, GEMPage& linkedPage_, bool readonly_)
   : title(title_)
   , linkedPage(&linkedPage_)
   , readonly(readonly_)
   , type(GEM_ITEM_LINK)
 { }
 
-GEMItem::GEMItem(char* title_, GEMPage* linkedPage_, bool readonly_)
+GEMItem::GEMItem(const char* title_, GEMPage* linkedPage_, bool readonly_)
   : title(title_)
   , linkedPage(linkedPage_)
   , readonly(readonly_)
   , type(GEM_ITEM_LINK)
 { }
 
-GEMItem::GEMItem(char* title_, void (*buttonAction_)(), bool readonly_)
+GEMItem::GEMItem(const char* title_, void (*buttonAction_)(), bool readonly_)
   : title(title_)
   , buttonAction(buttonAction_)
   , readonly(readonly_)
   , type(GEM_ITEM_BUTTON)
 { }
 
-void GEMItem::setTitle(char* title_) {
+template<typename... Args> GEMItem::GEMItem(const __FlashStringHelper* title_, Args... args) :
+  GEMItem(reinterpret_cast<PGM_P>(title_), args...) {
+}
+
+void GEMItem::setTitle(const char* title_) {
   title = title_;
 }
 
-char* GEMItem::getTitle() {
+const char* GEMItem::getTitle() {
   return title;
 }
 
