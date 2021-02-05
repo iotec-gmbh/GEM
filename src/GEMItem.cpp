@@ -338,12 +338,8 @@ GEMItem::GEMItem(const char* title_, void (*buttonAction_)(), bool readonly_)
   , type(GEM_ITEM_BUTTON)
 { }
 
-GEMItem::GEMItem(const __FlashStringHelper* title_) {
-    return GEMItem(title_->c_str());
-}
-
-GEMItem::GEMItem(const __FlashStringHelper* title_, const char *fmt...) {
-    return GEMItem(title_->c_str(), fmt);
+template<typename... Args> GEMItem::GEMItem(const __FlashStringHelper* title_, Args... args) :
+  GEMItem(reinterpret_cast<PGM_P>(title_), args...) {
 }
 
 void GEMItem::setTitle(const char* title_) {

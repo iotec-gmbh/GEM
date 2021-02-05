@@ -790,7 +790,7 @@ void GEM_u8g2::saveEditValue() {
       *(byte*)menuItemTmp->linkedVariable = atoi(_valueString);
       break;
     case GEM_VAL_CHAR:
-      strcpy((const char*)menuItemTmp->linkedVariable, trimString(_valueString)); // Potential overflow if string length is not defined
+      strcpy((char*)menuItemTmp->linkedVariable, trimString(_valueString)); // Potential overflow if string length is not defined
       break;
     case GEM_VAL_SELECT:
       {
@@ -827,7 +827,7 @@ void GEM_u8g2::exitEditValue() {
 
 // Trim leading/trailing whitespaces
 // Author: Adam Rosenfield, https://stackoverflow.com/a/122721
-char* GEM_u8g2::trimString(const char* str) {
+char* GEM_u8g2::trimString(char* str) {
   char *end;
 
   // Trim leading space

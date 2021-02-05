@@ -32,7 +32,6 @@
   along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <fmt/format.h>  // for "const char* fmt, ..."
 #include <WString.h>     // for __FlashStringHelper (F("asd"))
 
 #include "GEMPage.h"
@@ -163,10 +162,9 @@ class GEMItem {
     /*
       Provide any GEMItem constructor with __FlashStringHelper (for F("asd") macro) instead of char* title.
     */
-    GEMItem(const __FlashStringHelper* title_);
-    GEMItem(const __FlashStringHelper* title_, const char* fmt...);
+    template<typename... Args> GEMItem(const __FlashStringHelper* title_, Args... args);
 
-    void setTitle(char* title_);            // Set title of the menu item
+    void setTitle(const char* title_);            // Set title of the menu item
     const char* getTitle();                       // Get title of the menu item
     void setPrecision(byte prec);           // Explicitly set precision for float or double variables as required by dtostrf() conversion,
                                             // i.e. the number of digits after the decimal sign

@@ -35,6 +35,7 @@
 #ifndef HEADER_GEMPAGE
 #define HEADER_GEMPAGE
 
+#include <WString.h>     // for __FlashStringHelper (F("asd"))
 #include <Arduino.h>
 #include "GEMItem.h"
 

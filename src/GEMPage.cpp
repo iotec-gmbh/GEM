@@ -41,7 +41,7 @@ GEMPage::GEMPage(const char* title_, void (*exitAction_)())
 { }
 
 GEMPage::GEMPage(const __FlashStringHelper* title_, void (*exitAction_)())
-    : title(title_->c_str())
+    : title(reinterpret_cast<PGM_P>(title_))
     , exitAction(exitAction_)
 { }
 
