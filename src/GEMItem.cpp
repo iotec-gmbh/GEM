@@ -312,7 +312,7 @@ GEMItem::GEMItem(const char* title_, double& linkedVariable_, GEMPage* linkedPag
 { }
 
 GEMItem::GEMItem(const char* title_, double& linkedVariable_, GEMPage& linkedPage_)
-  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMPage* constructor
+  : GEMItem(title_, linkedVariable_, &linkedPage_) // call GEMItem* constructor
 { }
 
 //---
