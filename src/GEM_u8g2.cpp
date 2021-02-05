@@ -304,6 +304,11 @@ void GEM_u8g2::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw)
     case GEM_VAL_CHAR:
         printMenuItemValue((const char*)menuItemTmp->linkedVariable);
       break;
+    case GEM_VAL_CALLBACK:
+        if (menuItemTmp->getValue != nullptr) {
+          printMenuItemValue(menuItemTmp->getValue());
+        }
+      break;
     case GEM_VAL_BOOL:
       if (*(bool*)menuItemTmp->linkedVariable) {
         _u8g2.drawXBMP(_menuValuesLeftOffset, yDraw, checkboxChecked_width, checkboxChecked_height, checkboxChecked_bits);
@@ -374,6 +379,7 @@ void GEM_u8g2::printMenuItems() {
           case GEM_VAL_INTEGER:
           case GEM_VAL_BYTE:
           case GEM_VAL_CHAR:
+          case GEM_VAL_CALLBACK:
           #ifdef GEM_SUPPORT_FLOAT_EDIT
           case GEM_VAL_FLOAT:
           case GEM_VAL_DOUBLE:

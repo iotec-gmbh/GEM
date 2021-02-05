@@ -338,6 +338,14 @@ GEMItem::GEMItem(const char* title_, void (*buttonAction_)(), bool readonly_)
   , type(GEM_ITEM_BUTTON)
 { }
 
+GEMItem::GEMItem(const char* title_, const char* (*getValueStr)(void))
+  : title(title_)
+  , getValue(getValueStr)
+  , linkedType(GEM_VAL_CALLBACK)
+  , readonly(true)
+  , type(GEM_ITEM_VAL)
+{ }
+
 template<typename... Args> GEMItem::GEMItem(const __FlashStringHelper* title_, Args... args) :
   GEMItem(reinterpret_cast<PGM_P>(title_), args...) {
 }
