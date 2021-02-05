@@ -41,11 +41,11 @@
 #define HEADER_GEMITEM
 
 // Macro constants (aliases) for menu item types
-#define GEM_ITEM_VAL 0         // Menu item represents associated variable
-#define GEM_ITEM_LINK 1        // Menu item represents link to another menu page
-#define GEM_ITEM_BACK 2        // Menu item represents Back button (that links to parent level menu page)
-#define GEM_ITEM_BUTTON 3      // Menu item represents button (that leads to execution of user-defined routine in its own context)
-#define GEM_ITEM_LINKED_VAL 4  // Menu item represents a value that is linked to another menu page
+#define GEM_ITEM_VAL 0        // Menu item represents associated variable
+#define GEM_ITEM_LINK 1       // Menu item represents link to another menu page
+#define GEM_ITEM_BACK 2       // Menu item represents Back button (that links to parent level menu page)
+#define GEM_ITEM_BUTTON 3     // Menu item represents button (that leads to execution of user-defined routine in its own context)
+#define GEM_ITEM_LINKED_VAL 4 // Menu item represents a value that is linked to another menu page
 
 // Macro constant (alias) for readonly modifier of associated with menu item variable
 #define GEM_READONLY true
@@ -62,7 +62,6 @@ class GEMItem {
   friend class GEM;
   friend class GEM_u8g2;
   friend class GEMPage;
-
   public:
     /* 
       Constructors for menu item that represents option select, w/ callback
@@ -158,7 +157,6 @@ class GEMItem {
       values GEM_READONLY (alias for true)
     */
     GEMItem(const char* title_, void (*buttonAction_)(), bool readonly_ = false);
-
     /*
       Provide any GEMItem constructor with __FlashStringHelper (for F("asd") macro) instead of char* title.
     */
@@ -176,7 +174,6 @@ class GEMItem {
     void hide(bool hide = true);         // Explicitly hide or show menu item
     void show();                            // Explicitly show menu item
     bool getHidden();                    // Get hidden state of the menu item
-
   private:
     const char* title;
     byte type;
