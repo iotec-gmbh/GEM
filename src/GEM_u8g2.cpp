@@ -438,7 +438,7 @@ void GEM_u8g2::printMenuItems() {
       case GEM_ITEM_TEXT:
         // print title
         _u8g2.setCursor(5, yText);
-        printMenuItemTitle(menuItemTmp->title);
+        printMenuItemFull(menuItemTmp->title);
         break;
     }
     menuItemTmp = menuItemTmp->getMenuItemNext();
@@ -494,6 +494,9 @@ void GEM_u8g2::nextMenuItem() {
   } else {
     _menuPageCurrent->currentItemNum++;
   }
+  if (_menuPageCurrent->getCurrentMenuItem()->type == GEM_ITEM_TEXT){
+    nextMenuItem();
+  }
   drawMenu();
 }
 
@@ -502,6 +505,9 @@ void GEM_u8g2::prevMenuItem() {
     _menuPageCurrent->currentItemNum = _menuPageCurrent->itemsCount-1;
   } else {
     _menuPageCurrent->currentItemNum--;
+  }
+  if (_menuPageCurrent->getCurrentMenuItem()->type == GEM_ITEM_TEXT){
+    prevMenuItem();
   }
   drawMenu();
 }
