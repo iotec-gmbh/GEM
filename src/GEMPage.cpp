@@ -78,7 +78,7 @@ void GEMPage::setParentMenuPage(GEMPage& parentMenuPage) {
   currentItemNum = (itemsCount > 1) ? 1 : 0;
 }
 
-const char* GEMPage::getTitle() {
+const char* const GEMPage::getTitle() {
   return title;
 }
 

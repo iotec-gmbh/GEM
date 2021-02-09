@@ -53,7 +53,7 @@ class GEMPage {
     GEMPage(const __FlashStringHelper* title_ = F(""), void (*exitAction_)() = nullptr);
     void addMenuItem(GEMItem& menuItem);              // Add menu item to menu page
     void setParentMenuPage(GEMPage& parentMenuPage);  // Specify parent level menu page (to know where to go back to when pressing Back button)
-    const char* getTitle();                           // Get title of the menu page
+    const char* const getTitle();                           // Get title of the menu page
   private:
     const char* const title;
     byte currentItemNum = 0;                          // Currently selected (focused) menu item of the page
