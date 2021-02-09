@@ -46,6 +46,7 @@
 #define GEM_ITEM_BACK 2       // Menu item represents Back button (that links to parent level menu page)
 #define GEM_ITEM_BUTTON 3     // Menu item represents button (that leads to execution of user-defined routine in its own context)
 #define GEM_ITEM_LINKED_VAL 4 // Menu item represents a value that is linked to another menu page
+#define GEM_ITEM_TEXT 5       // Menu item represents a static text entry
 
 // Macro constant (alias) for readonly modifier of associated with menu item variable
 #define GEM_READONLY true
@@ -163,6 +164,11 @@ class GEMItem {
       @param 'getValueStr' - pointer to function that will return a char* and is executed when the item is updated
     */
     GEMItem(const char* title_, const char* (*getValueStr)(void));
+    /* 
+      Constructor for menu item that represents a single static string as text entry,
+      @param 'title_' - title of the menu item displayed on the screen
+    */
+    GEMItem(const char* title_);
     /*
       Provide any GEMItem constructor with __FlashStringHelper (for F("asd") macro) instead of char* title.
     */

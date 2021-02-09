@@ -346,6 +346,12 @@ GEMItem::GEMItem(const char* title_, const char* (*getValueStr)(void))
   , type(GEM_ITEM_VAL)
 { }
 
+GEMItem::GEMItem(const char* title_)
+  : title(title_)
+  , readonly(true)
+  , type(GEM_ITEM_TEXT)
+{ }
+
 template<typename... Args> GEMItem::GEMItem(const __FlashStringHelper* title_, Args... args) :
   GEMItem(reinterpret_cast<PGM_P>(title_), args...) {
 }

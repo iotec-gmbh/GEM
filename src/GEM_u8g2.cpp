@@ -435,6 +435,11 @@ void GEM_u8g2::printMenuItems() {
         // draw the link arrow
         _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 8, yDraw, arrowRight_width, arrowRight_height, arrowRight_bits);
         break;
+      case GEM_ITEM_TEXT:
+        // print title
+        _u8g2.setCursor(5, yText);
+        printMenuItemTitle(menuItemTmp->title);
+        break;
     }
     menuItemTmp = menuItemTmp->getMenuItemNext();
     y += _menuItemHeight;
