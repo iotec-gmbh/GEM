@@ -182,11 +182,13 @@ class GEM_u8g2 {
     byte _editValueLength;
     byte _editValueCursorPosition;
     byte _editValueVirtualCursorPosition;
+    bool _editValuefullScreenWidth;
+    byte _editValueItemLength;
     char _valueString[GEM_STR_LEN];
     int _valueSelectNum;
     void enterEditValueMode();
     void checkboxToggle();
-    void initEditValueCursor();
+    void initEditValueCursor(bool fullScreenWidth = false);
     void nextEditValueCursorPosition();
     void prevEditValueCursorPosition();
     void drawEditValueCursor();
