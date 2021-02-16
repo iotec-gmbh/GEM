@@ -371,7 +371,7 @@ void GEM_u8g2::printMenuItems() {
   byte y = _menuPageScreenTopOffset;
   byte i = 0;
   while (menuItemTmp != 0 && i < _menuItemsPerScreen) {
-    byte yText = y + getMenuItemInsetOffset()-3;
+    byte yText = y + getMenuItemInsetOffset()-2;
     byte yDraw = y + getMenuItemInsetOffset();
     switch (menuItemTmp->type) {
       case GEM_ITEM_VAL:
@@ -456,7 +456,7 @@ void GEM_u8g2::printMenuItems() {
 void GEM_u8g2::drawMenuPointer() {
   if (_menuPageCurrent->itemsCount > 0) {
     GEMItem* menuItemTmp = _menuPageCurrent->getCurrentMenuItem();
-    int pointerPosition = getCurrentItemTopOffset(true) + 1;
+    int pointerPosition = getCurrentItemTopOffset(true);
     if (_menuPointerType == GEM_POINTER_DASH) {
       if (menuItemTmp->readonly) {
         for (byte i = 0; i < (_menuItemHeight - 1) / 2; i++) {
@@ -644,7 +644,7 @@ void GEM_u8g2::prevEditValueCursorPosition() {
 }
 
 void GEM_u8g2::drawEditValueCursor() {
-  int pointerPosition = getCurrentItemTopOffset(true) + 1;
+  int pointerPosition = getCurrentItemTopOffset(true);
   byte cursorLeftOffset = (_editValuefullScreenWidth ? 11 : _menuValuesLeftOffset) + _editValueCursorPosition * _menuItemFont[_menuItemFontSize].width;
   _u8g2.setDrawColor(2);
   if (_editValueType == GEM_VAL_SELECT) {

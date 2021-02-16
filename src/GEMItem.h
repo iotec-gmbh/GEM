@@ -76,7 +76,7 @@ class GEMItem {
     GEMItem(const char* const title_, char* linkedVariable_, GEMSelect& select_, void (*saveAction_)());
     GEMItem(const char* const title_, float& linkedVariable_, GEMSelect& select_, void (*saveAction_)());
     GEMItem(const char* const title_, double& linkedVariable_, GEMSelect& select_, void (*saveAction_)());
-     /* 
+    /* 
       Constructors for menu item that represents option select, w/o callback
       @param 'title_' - title of the menu item displayed on the screen
       @param 'linkedVariable_' - reference to variable that menu item is associated with (either byte, int, char*, float, or double)
