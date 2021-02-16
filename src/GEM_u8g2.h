@@ -43,8 +43,8 @@
 #include "constants.h"
 
 // Macro constants (aliases) for u8g2 font families used to draw menu
-#define GEM_FONT_BIG        u8g2_font_6x12_tr
-#define GEM_FONT_SMALL      u8g2_font_tom_thumb_4x6_tr
+#define GEM_FONT_BIG        u8g2_font_6x12_tf
+#define GEM_FONT_SMALL      u8g2_font_tom_thumb_4x6_tf
 #define GEM_FONT_BIG_CYR    u8g2_font_6x12_t_cyrillic
 #define GEM_FONT_SMALL_CYR  u8g2_font_4x6_t_cyrillic
 
@@ -160,7 +160,8 @@ class GEM_u8g2 {
     void printMenuItemString(const char* str, byte num, byte startPos = 0);
     void printMenuItemTitle(const char* str, int offset = 0);
     void printMenuItemValue(const char* str, int offset = 0, byte startPos = 0);
-    void printMenuItemValue(GEMItem* menuItemTmp, byte yDraw);
+    void printMenuItemValuePrintFunction(const char* str, byte yText, bool printFull = false);
+    void printMenuItemValue(GEMItem* menuItemTmp, byte yDraw, byte yText);
     void printMenuItemFull(const char* str, int offset = 0);
     byte getMenuItemInsetOffset(bool forSprite = false);
     byte getCurrentItemTopOffset(bool withInsetOffset = true, bool forSprite = false);
@@ -181,11 +182,13 @@ class GEM_u8g2 {
     byte _editValueLength;
     byte _editValueCursorPosition;
     byte _editValueVirtualCursorPosition;
+    bool _editValuefullScreenWidth;
+    byte _editValueItemLength;
     char _valueString[GEM_STR_LEN];
     int _valueSelectNum;
     void enterEditValueMode();
     void checkboxToggle();
-    void initEditValueCursor();
+    void initEditValueCursor(bool fullScreenWidth = false);
     void nextEditValueCursorPosition();
     void prevEditValueCursorPosition();
     void drawEditValueCursor();

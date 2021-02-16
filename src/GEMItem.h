@@ -117,6 +117,19 @@ class GEMItem {
     GEMItem(const char* const title_, float& linkedVariable_, bool readonly_ = false);
     GEMItem(const char* const title_, double& linkedVariable_, bool readonly_ = false);
     /* 
+      Constructors for menu item that represents variable, w/o callback and without title (so they can be displayed over the whole width of the screen)
+      @param 'linkedVariable_' - reference to variable that menu item is associated with (either byte, int, char*, bool, float, or double)
+      @param 'readonly_' (optional) - set readonly mode for variable that menu item is associated with
+      values GEM_READONLY (alias for true)
+      default false
+    */
+    GEMItem(byte& linkedVariable_, bool readonly_ = false);
+    GEMItem(int& linkedVariable_, bool readonly_ = false);
+    GEMItem(char* linkedVariable_, bool readonly_ = false);
+    GEMItem(bool& linkedVariable_, bool readonly_ = false);
+    GEMItem(float& linkedVariable_, bool readonly_ = false);
+    GEMItem(double& linkedVariable_, bool readonly_ = false);
+    /* 
       Constructors for menu item that represents variable, that are linked to another screen
       @param 'title_' - title of the menu item displayed on the screen
       @param 'linkedVariable_' - reference to variable that menu item is associated with (either byte, int, char*, bool, float, or double)
@@ -164,15 +177,13 @@ class GEMItem {
       @param 'getValueStr' - pointer to function that will return a char* and is executed when the item is updated
     */
     GEMItem(const char* const title_, const char* const (*getValueStr)(void));
+    GEMItem(const char* const (*getValueStr)(void));
     /* 
       Constructor for menu item that represents a single static string as text entry,
       @param 'title_' - title of the menu item displayed on the screen
     */
     GEMItem(const char* const title_);
-    /*
-      Provide any GEMItem constructor with __FlashStringHelper (for F("asd") macro) instead of char* title.
-    */
-    template<typename... Args> GEMItem(const __FlashStringHelper* title_, Args... args);
+
 
     void setTitle(const char* const title_);            // Set title of the menu item
     const char* getTitle();                       // Get title of the menu item
