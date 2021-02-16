@@ -234,6 +234,58 @@ GEMItem::GEMItem(const char* const title_, double& linkedVariable_, bool readonl
 
 //---
 
+GEMItem::GEMItem(byte& linkedVariable_, bool readonly_)
+  : title(nullptr)
+  , linkedVariable(&linkedVariable_)
+  , linkedType(GEM_VAL_BYTE)
+  , readonly(readonly_)
+  , type(GEM_ITEM_VAL)
+{ }
+
+GEMItem::GEMItem(int& linkedVariable_, bool readonly_)
+  : title(nullptr)
+  , linkedVariable(&linkedVariable_)
+  , linkedType(GEM_VAL_INTEGER)
+  , readonly(readonly_)
+  , type(GEM_ITEM_VAL)
+{ }
+
+GEMItem::GEMItem(char* linkedVariable_, bool readonly_)
+  : title(nullptr)
+  , linkedVariable(linkedVariable_)
+  , linkedType(GEM_VAL_CHAR)
+  , readonly(readonly_)
+  , type(GEM_ITEM_VAL)
+{ }
+
+GEMItem::GEMItem(bool& linkedVariable_, bool readonly_)
+  : title(nullptr)
+  , linkedVariable(&linkedVariable_)
+  , linkedType(GEM_VAL_BOOL)
+  , readonly(readonly_)
+  , type(GEM_ITEM_VAL)
+{ }
+
+GEMItem::GEMItem(float& linkedVariable_, bool readonly_)
+  : title(nullptr)
+  , linkedVariable(&linkedVariable_)
+  , linkedType(GEM_VAL_FLOAT)
+  , precision(GEM_FLOAT_PREC)
+  , readonly(readonly_)
+  , type(GEM_ITEM_VAL)
+{ }
+
+GEMItem::GEMItem(double& linkedVariable_, bool readonly_)
+  : title(nullptr)
+  , linkedVariable(&linkedVariable_)
+  , linkedType(GEM_VAL_DOUBLE)
+  , precision(GEM_DOUBLE_PREC)
+  , readonly(readonly_)
+  , type(GEM_ITEM_VAL)
+{ }
+
+//---
+
 GEMItem::GEMItem(const char* const title_, byte& linkedVariable_, GEMPage* linkedPage_)
   : title(title_)
   , linkedVariable(&linkedVariable_)
@@ -346,15 +398,23 @@ GEMItem::GEMItem(const char* const title_, const char* const (*getValueStr)(void
   , type(GEM_ITEM_VAL)
 { }
 
+GEMItem::GEMItem(const char* const (*getValueStr)(void))
+  : title(nullptr)
+  , getValue(getValueStr)
+  , linkedType(GEM_VAL_CALLBACK)
+  , readonly(true)
+  , type(GEM_ITEM_VAL)
+{ }
+
 GEMItem::GEMItem(const char* const title_)
   : title(title_)
   , readonly(true)
   , type(GEM_ITEM_TEXT)
 { }
 
-template<typename... Args> GEMItem::GEMItem(const __FlashStringHelper* title_, Args... args) :
-  GEMItem(reinterpret_cast<PGM_P>(title_), args...) {
-}
+// template<typename... Args> GEMItem::GEMItem(const __FlashStringHelper* title_, Args... args) :
+//   GEMItem(reinterpret_cast<PGM_P>(title_), args...) {
+// }
 
 void GEMItem::setTitle(const char* const title_) {
   title = title_;
