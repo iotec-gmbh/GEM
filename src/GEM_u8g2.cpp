@@ -167,7 +167,7 @@ void GEM_u8g2::init() {
 
   _u8g2.firstPage();
   do {
-    //Fix for our non centered screen
+    //TODO: Add better workaround - Fix for our non centered screen
     //_u8g2.drawXBMP((_u8g2.getDisplayWidth() - _splash.width) / 2, (_u8g2.getDisplayHeight() - _splash.height) / 2, _splash.width, _splash.height, _splash.image);
     _u8g2.drawXBMP((_u8g2.getDisplayWidth() - _splash.width) / 2, (96 - _splash.height) / 2, _splash.width, _splash.height, _splash.image);
   } while (_u8g2.nextPage());

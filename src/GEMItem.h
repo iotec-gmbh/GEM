@@ -184,11 +184,6 @@ class GEMItem {
     */
     GEMItem(const char* const title_);
 
-    
-    // /*
-    //   Provide any GEMItem constructor with __FlashStringHelper (for F("asd") macro) instead of char* title.
-    // */
-    // template<typename... Args> GEMItem(const __FlashStringHelper* title_, Args... args);
 
     void setTitle(const char* const title_);            // Set title of the menu item
     const char* getTitle();                       // Get title of the menu item
