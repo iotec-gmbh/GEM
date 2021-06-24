@@ -371,8 +371,8 @@ void GEM_u8g2::printMenuItems() {
   byte y = _menuPageScreenTopOffset;
   byte i = 0;
   while (menuItemTmp != 0 && i < _menuItemsPerScreen) {
-    byte yText = y + getMenuItemInsetOffset()-2;
-    byte yDraw = y + getMenuItemInsetOffset();
+    byte yText = y + getMenuItemInsetOffset() - 4;
+    byte yDraw = y + getMenuItemInsetOffset(true);
     switch (menuItemTmp->type) {
       case GEM_ITEM_VAL:
         // print item title without edit symbol
