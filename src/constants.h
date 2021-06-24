@@ -53,3 +53,4 @@
                            // (note that char[] array should be big enough to hold select option with the longest value)
 #define GEM_VAL_FLOAT 5    // Associated variable is of type float
 #define GEM_VAL_DOUBLE 6   // Associated variable is of type double
+#define GEM_VAL_CALLBACK 7 // Associated variable is of type const char* callback-function
