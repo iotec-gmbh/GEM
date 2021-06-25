@@ -142,8 +142,8 @@ class GEM_u8g2 {
     byte _menuPageScreenTopOffset;
     byte _menuValuesLeftOffset;
     byte _menuItemFontSize;
-    FontSize _menuItemFont[2] = {{6,8},{4,6}};
-    FontFamilies _fontFamilies = {GEM_FONT_BIG, GEM_FONT_SMALL};
+    FontSize _menuItemFont[2];
+    FontFamilies _fontFamilies;
     bool _cyrillicEnabled = false;
     byte _menuItemInsetOffset;
     byte _menuItemTitleLength;
