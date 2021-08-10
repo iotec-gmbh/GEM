@@ -412,6 +412,12 @@ GEMItem::GEMItem(const char* const title_)
   , type(GEM_ITEM_TEXT)
 { }
 
+GEMItem::GEMItem()
+    : title("unset")
+    , readonly(true)
+    , type(GEM_ITEM_TEXT)
+ { }
+
 void GEMItem::setTitle(const char* const title_) {
   title = title_;
 }

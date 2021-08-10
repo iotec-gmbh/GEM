@@ -183,6 +183,10 @@ class GEMItem {
       @param 'title_' - title of the menu item displayed on the screen
     */
     GEMItem(const char* const title_);
+    /* 
+      Constructor for menu item that automatically sets the title to unset
+    */
+    GEMItem();
 
 
     void setTitle(const char* const title_);            // Set title of the menu item
