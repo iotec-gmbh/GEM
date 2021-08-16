@@ -164,24 +164,6 @@ class GEMItem {
     */
     GEMItem(const char* const title_, GEMPage* linkedPage_, bool readonly_ = false);
     /* 
-      Constructor for menu item that represents link to another menu page (via reference)
-      @param 'title_' - title of the menu item displayed on the screen
-      @param 'linkedPage_' - reference to GEMPage menu page that menu item is associated with
-      @param 'buttonAction_' - pointer to function that will be executed when menu item is activated
-      @param 'readonly_' (optional) - set readonly mode for the link (user won't be able to navigate to linked page)
-      values GEM_READONLY (alias for true)
-    */
-    GEMItem(const char* const title_, GEMPage& linkedPage_, void (*buttonAction_)(), bool readonly_ = false);
-    /* 
-      Constructor for menu item that represents link to another menu page (via pointer)
-      @param 'title_' - title of the menu item displayed on the screen
-      @param 'linkedPage_' - pointer to GEMPage menu page that menu item is associated with
-      @param 'buttonAction_' - pointer to function that will be executed when menu item is activated
-      @param 'readonly_' (optional) - set readonly mode for the link (user won't be able to navigate to linked page)
-      values GEM_READONLY (alias for true)
-    */
-    GEMItem(const char* const title_, GEMPage* linkedPage_, void (*buttonAction_)(), bool readonly_ = false);
-    /* 
       Constructor for menu item that represents button
       @param 'title_' - title of the menu item displayed on the screen
       @param 'buttonAction_' - pointer to function that will be executed when menu item is activated

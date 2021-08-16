@@ -383,22 +383,6 @@ GEMItem::GEMItem(const char* const title_, GEMPage* linkedPage_, bool readonly_)
   , type(GEM_ITEM_LINK)
 { }
 
-GEMItem::GEMItem(const char* const title_, GEMPage& linkedPage_, void (*buttonAction_)(), bool readonly_)
-  : title(title_)
-  , linkedPage(&linkedPage_)
-  , buttonAction(buttonAction_)
-  , readonly(readonly_)
-  , type(GEM_ITEM_LINK)
-{ }
-
-GEMItem::GEMItem(const char* const title_, GEMPage* linkedPage_, void (*buttonAction_)(), bool readonly_)
-  : title(title_)
-  , linkedPage(linkedPage_)
-  , buttonAction(buttonAction_)
-  , readonly(readonly_)
-  , type(GEM_ITEM_LINK)
-{ }
-
 GEMItem::GEMItem(const char* const title_, void (*buttonAction_)(), bool readonly_)
   : title(title_)
   , buttonAction(buttonAction_)
