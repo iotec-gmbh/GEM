@@ -46,23 +46,29 @@ GEMPage::GEMPage(const __FlashStringHelper* title_, void (*exitAction_)())
 { }
 
 void GEMPage::addMenuItem(GEMItem& menuItem) {
-  // Prevent adding menu item that was already added to another (or the same) page
-  if (menuItem.parentPage == nullptr) {
-    if (itemsCountTotal == 0) {
-      // If menu page is empty, link supplied menu item from within page directly (this will be the first menu item in a page)
-      _menuItem = &menuItem;
-    } else {
-      // If menu page is not empty, link supplied menu item from within the last menu item of the page
-      getMenuItem(itemsCountTotal-1, true)->menuItemNext = &menuItem;
-    }
-    menuItem.parentPage = this;
-    if (!menuItem.hidden) {
-      itemsCount++;
-    }
-    itemsCountTotal++;
-    currentItemNum = (_menuItemBack.linkedPage != nullptr) ? 1 : 0;
-  }
+    // Prevent adding menu item that was already added to another (or the same) page
+    addMenuItem(&menuItem);
 }
+
+void GEMPage::addMenuItem(GEMItem* menuItem) {
+    // Prevent adding menu item that was already added to another (or the same) page
+    if (menuItem->parentPage == nullptr) {
+        if (itemsCountTotal == 0) {
+            // If menu page is empty, link supplied menu item from within page directly (this will be the first menu item in a page)
+            _menuItem = menuItem;
+        } else {
+            // If menu page is not empty, link supplied menu item from within the last menu item of the page
+            getMenuItem(itemsCountTotal - 1, true)->menuItemNext = menuItem;
+        }
+        menuItem->parentPage = this;
+        if (!menuItem->hidden) {
+            itemsCount++;
+        }
+        itemsCountTotal++;
+        currentItemNum = (_menuItemBack.linkedPage != nullptr) ? 1 : 0;
+    }
+}
+
 
 void GEMPage::setParentMenuPage(GEMPage& parentMenuPage) {
   _menuItemBack.type = GEM_ITEM_BACK;
@@ -80,6 +86,22 @@ void GEMPage::setParentMenuPage(GEMPage& parentMenuPage) {
 
 const char* const GEMPage::getTitle() {
   return title;
+}
+
+void GEMPage::deleteAllMenuItems() {
+    // delete all child menu items
+    GEMItem* menuItemTmp = _menuItem;
+    while (menuItemTmp != 0) {
+        GEMItem* old = menuItemTmp;
+        menuItemTmp = menuItemTmp->menuItemNext;
+        delete (old);
+    }
+
+    // reset internal members
+    _menuItem = 0;        // First menu item of the page (the following ones are linked from within one another)
+    currentItemNum = 0;   // Currently selected (focused) menu item of the page
+    itemsCount = 0;       // Items count excluding hidden ones
+    itemsCountTotal = 0;  // Items count incuding hidden ones
 }
 
 GEMItem* GEMPage::getMenuItem(byte index, bool total) {
