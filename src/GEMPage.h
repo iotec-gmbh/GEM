@@ -55,9 +55,11 @@ class GEMPage {
     void addMenuItem(GEMItem* menuItem);              // Add menu item to menu page
     void setParentMenuPage(GEMPage& parentMenuPage);  // Specify parent level menu page (to know where to go back to when pressing Back button)
     const char* const getTitle();                     // Get title of the menu page
+    void setTitle(const char* const title_);          // Set title of the menu page
+    void setTitle(const __FlashStringHelper* title_); // Set title of the menu page
     void deleteAllMenuItems();                        // Deletes "del" all menu items of this page. These items need to be added with "new" before!
   private:
-    const char* const title;
+    const char* title;
     byte currentItemNum = 0;                          // Currently selected (focused) menu item of the page
     byte itemsCount = 0;                              // Items count excluding hidden ones
     byte itemsCountTotal = 0;                         // Items count incuding hidden ones

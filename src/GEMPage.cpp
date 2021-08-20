@@ -88,6 +88,14 @@ const char* const GEMPage::getTitle() {
   return title;
 }
 
+void GEMPage::setTitle(const char* const title_) {
+  title = title_;
+}
+
+void GEMPage::setTitle(const __FlashStringHelper* title_) {
+  title = reinterpret_cast<PGM_P>(title_);
+}
+
 void GEMPage::deleteAllMenuItems() {
     // delete all child menu items
     GEMItem* menuItemTmp = _menuItem;
