@@ -51,6 +51,11 @@ void GEMPage::addMenuItem(GEMItem& menuItem) {
 }
 
 void GEMPage::addMenuItem(GEMItem* menuItem) {
+    // check arguments
+    if (menuItem == nullptr){
+        return;
+    }
+
     // Prevent adding menu item that was already added to another (or the same) page
     if (menuItem->parentPage == nullptr) {
         if (itemsCountTotal == 0) {
