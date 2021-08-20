@@ -383,10 +383,11 @@ GEMItem::GEMItem(const char* const title_, GEMPage* linkedPage_, bool readonly_)
   , type(GEM_ITEM_LINK)
 { }
 
-GEMItem::GEMItem(const char* const title_, void (*buttonAction_)(), bool readonly_)
+GEMItem::GEMItem(const char* const title_, void (*buttonAction_)(), bool readonly_, bool hideArrow_)
   : title(title_)
   , buttonAction(buttonAction_)
   , readonly(readonly_)
+  , hideArrow(hideArrow_)
   , type(GEM_ITEM_BUTTON)
 { }
 
