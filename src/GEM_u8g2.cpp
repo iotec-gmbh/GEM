@@ -426,17 +426,28 @@ void GEM_u8g2::printMenuItems() {
         break;
       case GEM_ITEM_BUTTON:
         // print item value without read only marker
-        _u8g2.setCursor(11, yText);
-        printMenuItemFull(menuItemTmp->title);
         if (!menuItemTmp->hideArrow){
-          _u8g2.drawXBMP(5, yDraw, arrowBtn_width, arrowBtn_height, arrowBtn_bits);
+          if (!menuItemTmp->useRightArrow){
+            _u8g2.setCursor(11, yText);
+            printMenuItemFull(menuItemTmp->title);
+            _u8g2.drawXBMP(5, yDraw, arrowBtn_width, arrowBtn_height, arrowBtn_bits);
+          }
+          else // use arrow on the right
+          {
+            _u8g2.setCursor(5, yText);
+            printMenuItemFull(menuItemTmp->title);
+            _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 8, yDraw, arrowRight_width, arrowRight_height, arrowRight_bits);
+          }
         }
         else if (strlen(menuItemTmp->title) == 0){
           // draw back arrow if link arrow is not set and title is not set
+          _u8g2.setCursor(11, yText);
           _u8g2.drawXBMP(5, yDraw, arrowLeft_width, arrowLeft_height, arrowLeft_bits);
         }
         else {
-          // just draw no arrow
+          // just the title without arrow
+          _u8g2.setCursor(5, yText);
+          printMenuItemFull(menuItemTmp->title);
         }
         break;
       case GEM_ITEM_LINKED_VAL:

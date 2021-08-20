@@ -383,11 +383,12 @@ GEMItem::GEMItem(const char* const title_, GEMPage* linkedPage_, bool readonly_)
   , type(GEM_ITEM_LINK)
 { }
 
-GEMItem::GEMItem(const char* const title_, void (*buttonAction_)(), bool readonly_, bool hideArrow_)
+GEMItem::GEMItem(const char* const title_, void (*buttonAction_)(), bool readonly_, bool hideArrow_, bool useRightArrow_)
   : title(title_)
   , buttonAction(buttonAction_)
   , readonly(readonly_)
   , hideArrow(hideArrow_)
+  , useRightArrow(useRightArrow_)
   , type(GEM_ITEM_BUTTON)
 { }
 
@@ -409,6 +410,12 @@ GEMItem::GEMItem(const char* const (*getValueStr)(void))
 
 GEMItem::GEMItem(const char* const title_)
   : title(title_)
+  , readonly(true)
+  , type(GEM_ITEM_TEXT)
+{ }
+
+GEMItem::GEMItem(const __FlashStringHelper* title_)
+  : title(reinterpret_cast<PGM_P>(title_))
   , readonly(true)
   , type(GEM_ITEM_TEXT)
 { }
