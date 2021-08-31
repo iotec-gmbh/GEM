@@ -317,7 +317,7 @@ void GEM_u8g2::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw, byte yText)
         printMenuItemValuePrintFunction(valueStringTmp, yText, (menuItemTmp->title == nullptr));
       break;
     case GEM_VAL_CHAR:
-        printMenuItemValuePrintFunction((const char*)menuItemTmp->linkedVariable, yText, (menuItemTmp->title == nullptr));
+        printMenuItemValuePrintFunction((const char*)menuItemTmp->linkedVariable, yText, (menuItemTmp->title == nullptr), 5);
       break;
     case GEM_VAL_CALLBACK:
         if (menuItemTmp->getValue != nullptr) {
