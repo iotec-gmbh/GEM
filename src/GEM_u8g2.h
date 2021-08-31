@@ -160,7 +160,7 @@ class GEM_u8g2 {
     void printMenuItemString(const char* str, byte num, byte startPos = 0);
     void printMenuItemTitle(const char* str, int offset = 0);
     void printMenuItemValue(const char* str, int offset = 0, byte startPos = 0);
-    void printMenuItemValuePrintFunction(const char* str, byte yText, bool printFull = false);
+    void printMenuItemValuePrintFunction(const char* str, byte yText, bool printFull = false, byte offset = 11);
     void printMenuItemValue(GEMItem* menuItemTmp, byte yDraw, byte yText);
     void printMenuItemFull(const char* str, int offset = 0);
     byte getMenuItemInsetOffset(bool forSprite = false);

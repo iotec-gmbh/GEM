@@ -286,10 +286,10 @@ void GEM_u8g2::printMenuItemValue(const char* str, int offset, byte startPos) {
   printMenuItemString(str, _menuItemValueLength + offset, startPos);
 }
 
-void GEM_u8g2::printMenuItemValuePrintFunction(const char* str, byte yText, bool printFull){
+void GEM_u8g2::printMenuItemValuePrintFunction(const char* str, byte yText, bool printFull, byte offset){
   // select menu print function, dependent on if we want to print a value with or without title
   if (printFull){
-    _u8g2.setCursor(11, yText);
+    _u8g2.setCursor(offset, yText);
     printMenuItemFull(str);
   }
   else {
@@ -373,7 +373,7 @@ void GEM_u8g2::printMenuItems() {
   byte y = _menuPageScreenTopOffset;
   byte i = 0;
   while (menuItemTmp != 0 && i < _menuItemsPerScreen) {
-    byte yText = y + getMenuItemInsetOffset() - 4;
+    byte yText = y + getMenuItemInsetOffset() - 1; // TODO: Change here to adjust
     byte yDraw = y + getMenuItemInsetOffset(true);
     switch (menuItemTmp->type) {
       case GEM_ITEM_VAL:
