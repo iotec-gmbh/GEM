@@ -321,7 +321,7 @@ void GEM_u8g2::printMenuItemValue(GEMItem* menuItemTmp, byte yDraw, byte yText)
       break;
     case GEM_VAL_CALLBACK:
         if (menuItemTmp->getValue != nullptr) {
-          printMenuItemValuePrintFunction(menuItemTmp->getValue(), yText, (menuItemTmp->title == nullptr));
+          printMenuItemValuePrintFunction(menuItemTmp->getValue(), yText, (menuItemTmp->title == nullptr), 5);
         }
       break;
     case GEM_VAL_BOOL:
