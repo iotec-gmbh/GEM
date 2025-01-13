@@ -401,9 +401,21 @@ void GEM_u8g2::printMenuItems() {
               printMenuItemString(_valueString, _editValuefullScreenWidth ? 11 : _menuItemValueLength, _editValueVirtualCursorPosition - _editValueCursorPosition);
               drawEditValueCursor();
             break;
+          case GEM_VAL_SELECT:
+          {
+              GEMSelect* select = menuItemTmp->select;
+              if (_editValueMode && menuItemTmp == _menuPageCurrent->getCurrentMenuItem()) {
+                printMenuItemValue(select->getOptionNameByIndex(_valueSelectNum));
+                _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 7, yDraw, selectArrows_width, selectArrows_height, selectArrows_bits);
+                drawEditValueCursor();
+              } else {
+                printMenuItemValue(select->getSelectedOptionName(menuItemTmp->linkedVariable));
+                _u8g2.drawXBMP(_u8g2.getDisplayWidth() - 7, yDraw, selectArrows_width, selectArrows_height, selectArrows_bits);
+              }
+          }
+          break;
           // draw item - there is no difference if in edit mode or not
           case GEM_VAL_BOOL:
-          case GEM_VAL_SELECT:
               printMenuItemValue(menuItemTmp, yDraw, yText);
             break;
         }
