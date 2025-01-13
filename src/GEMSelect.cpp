@@ -8,13 +8,14 @@
   Supports buttons that can invoke user-defined actions and create action-specific
   context, which can have its own enter (setup) and exit callbacks as well as loop function.
 
-  Supports AltSerialGraphicLCD library by Jon Green (http://www.jasspa.com/serialGLCD.html)
-  and U8g2 library by olikraus (https://github.com/olikraus/U8g2_Arduino).
+  Supports:
+  - AltSerialGraphicLCD library by Jon Green (http://www.jasspa.com/serialGLCD.html);
+  - U8g2 library by olikraus (https://github.com/olikraus/U8g2_Arduino);
 
   For documentation visit:
   https://github.com/Spirik/GEM
 
-  Copyright (c) 2018-2020 Alexander 'Spirik' Spiridonov
+  Copyright (c) 2018-2023 Alexander 'Spirik' Spiridonov
 
   This file is part of GEM library.
 
@@ -101,15 +102,15 @@ int GEMSelect::getSelectedOptionNum(void* variable) {
     }
     if (found) { return i; }
   }
-  if (!found) { return -1; }
+  return -1;
 }
 
-char* GEMSelect::getSelectedOptionName(void* variable) {
+const char* GEMSelect::getSelectedOptionName(void* variable) {
   int selectedOptionNum = getSelectedOptionNum(variable);
   return getOptionNameByIndex(selectedOptionNum);
 }
 
-char* GEMSelect::getOptionNameByIndex(int index) {
+const char* GEMSelect::getOptionNameByIndex(int index) {
   const char* name;
   SelectOptionInt* optsInt = (SelectOptionInt*)_options;
   SelectOptionByte* optsByte = (SelectOptionByte*)_options;
@@ -132,8 +133,11 @@ char* GEMSelect::getOptionNameByIndex(int index) {
     case GEM_VAL_DOUBLE:
       name = (index > -1 && index < _length) ? optsDouble[index].name : "";
       break;
+    default:
+      name = "";
+      break;
   }
-  return const_cast<char*>(name);
+  return name;
 }
 
 void GEMSelect::setValue(void* variable, int index) {
